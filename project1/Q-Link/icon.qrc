@@ -1,0 +1,35 @@
+<RCC>
+    <qresource prefix="/">
+        <file>res/iimage/1.png</file>
+        <file>res/iimage/2.png</file>
+        <file>res/iimage/3.png</file>
+        <file>res/iimage/4.png</file>
+        <file>res/iimage/5.png</file>
+        <file>res/iimage/6.png</file>
+        <file>res/iimage/7.png</file>
+        <file>res/iimage/8.png</file>
+        <file>res/iimage/9.png</file>
+        <file>res/iimage/10.png</file>
+        <file>res/iimage/11.png</file>
+        <file>res/iimage/12.png</file>
+        <file>res/iimage/13.png</file>
+        <file>res/iimage/14.png</file>
+        <file>res/iimage/15.png</file>
+        <file>res/iimage/16.png</file>
+        <file>res/iimage/17.png</file>
+        <file>res/iimage/18.png</file>
+        <file>res/iimage/19.png</file>
+        <file>res/iimage/20.png</file>
+        <file>res/iimage/21.png</file>
+        <file>res/iimage/22.png</file>
+        <file>res/iimage/23.png</file>
+        <file>res/iimage/24.png</file>
+        <file>res/iimage/25.png</file>
+        <file>res/iimage/100.jpg</file>
+        <file>res/image/1.png</file>
+        <file>res/iimage/101.png</file>
+        <file>res/iimage/200.png</file>
+        <file>res/iimage/300.png</file>
+        <file>res/image/12.png</file>
+    </qresource>
+</RCC>
