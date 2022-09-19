@@ -1,0 +1,156 @@
+#/* $begin ncopy-ys */
+##################################################################
+# ncopy.ys - Copy a src block of len words to dst.
+# Return the number of positive words (>0) contained in src.
+#
+# Include your name and ID here.
+# Name: Songtao Xue ID: 520030910034
+# Describe how and why you modified the baseline code.
+# 1. use iaddq instruction to cut down the number of instruction
+# 2. add instruction between mrmovq and rmmovq to eliminate load/use hazard
+# 3. use loop unrolling to reduce cycle overhead
+# 4. iaddq also set CC, use iaddq rather than andq to judge
+
+##################################################################
+# Do not modify this portion
+# Function prologue.
+# %rdi = src, %rsi = dst, %rdx = len
+ncopy:
+
+##################################################################
+# You can modify this portion
+# Loop header
+	xorq %rax,%rax		# count = 0;
+	iaddq $-8,%rdx
+	jl Judge1
+
+Loop:
+    mrmovq (%rdi),%r8
+	mrmovq 8(%rdi),%r9
+	mrmovq 16(%rdi),%r10
+	mrmovq 24(%rdi),%r11
+	mrmovq 32(%rdi),%r12
+	mrmovq 40(%rdi),%r13
+	mrmovq 48(%rdi),%r14
+	mrmovq 56(%rdi),%rcx
+	rmmovq %r8,(%rsi)
+	rmmovq %r9,8(%rsi)
+	rmmovq %r10,16(%rsi)
+	rmmovq %r11,24(%rsi)
+	rmmovq %r12,32(%rsi)
+	rmmovq %r13,40(%rsi)
+	rmmovq %r14,48(%rsi)
+	rmmovq %rcx,56(%rsi)
+	andq %r8,%r8
+	jle lNpos1
+	iaddq $1,%rax
+lNpos1:
+	andq %r9,%r9
+	jle lNpos2
+	iaddq $1,%rax
+lNpos2:
+	andq %r10,%r10
+	jle lNpos3
+	iaddq $1,%rax
+lNpos3:
+	andq %r11,%r11
+	jle lNpos4
+	iaddq $1,%rax
+lNpos4:
+    andq %r12,%r12
+	jle lNpos5
+	iaddq $1,%rax
+lNpos5:
+    andq %r13,%r13
+	jle lNpos6
+	iaddq $1,%rax
+lNpos6:
+    andq %r14,%r14
+	jle lNpos7
+	iaddq $1,%rax
+lNpos7:
+    andq %rcx,%rcx
+	jle next
+	iaddq $1,%rax
+next:
+    iaddq $64,%rdi
+	iaddq $64,%rsi
+	iaddq $-8,%rdx
+	jge Loop
+     
+Judge1:
+    iaddq $4,%rdx 
+	jge remain1
+Judge2:
+    iaddq $2,%rdx
+	jge remain2
+Judge3:
+    iaddq $1,%rdx
+	jge remain3
+	ret
+remain1:
+    mrmovq (%rdi),%r8
+    mrmovq 8(%rdi),%r9
+    mrmovq 16(%rdi),%r10
+    mrmovq 24(%rdi),%r11
+    rmmovq %r8,(%rsi)
+    rmmovq %r9,8(%rsi)
+    rmmovq %r10,16(%rsi)
+    rmmovq %r11,24(%rsi)
+	andq %r8,%r8
+	jle rNpos1
+	iaddq $1,%rax
+rNpos1:
+	andq %r9,%r9
+	jle rNops2
+	iaddq $1,%rax
+rNops2:
+	andq %r10,%r10
+    jle rNops3
+	iaddq $1,%rax
+rNops3:
+	andq %r11,%r11
+    jle rNops4
+	iaddq $1,%rax
+rNops4:
+    iaddq $32,%rdi
+	iaddq $32,%rsi
+	iaddq $-4,%rdx
+	jmp Judge2
+
+remain2:
+    mrmovq (%rdi),%r8
+    mrmovq 8(%rdi),%r9
+    rmmovq %r8,(%rsi)
+    rmmovq %r9,8(%rsi)
+	andq %r8,%r8
+	jle rNpos5
+    iaddq $1,%rax
+rNpos5:
+    andq %r9,%r9
+	jle rNpos6
+	iaddq $1,%rax
+rNpos6:
+    iaddq $16,%rdi
+	iaddq $16,%rsi
+	iaddq $-2,%rdx
+	jmp Judge3
+
+remain3:
+    mrmovq (%rdi),%r8
+    andq %r8,%r8
+    rmmovq %r8,(%rsi)
+    jle rNpos7
+    iaddq $1,%rax
+rNpos7:
+    ret
+
+##################################################################
+# Do not modify the following section of code
+# Function epilogue.
+Done:
+	ret
+##################################################################
+# Keep the following label at the end of your function
+End:
+#/* $end ncopy-ys */

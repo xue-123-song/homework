@@ -1,0 +1,42 @@
+# Name: Songtao Xue ID: 520030910034    
+
+.pos 0
+		irmovq stack, %rsp
+		call main
+		halt
+
+# Sample linked list
+
+.align 8
+ele1:
+		.quad 0x00a
+		.quad e1e2
+e1e2:
+		.quad 0x0b0
+		.quad e1e3
+e1e3:
+		.quad 0xc00
+		.quad 0
+
+rsum_list:
+		pushq %r14  
+		irmovq $0, %rax
+		andq %rdi,%rdi
+		je END
+		mrmovq 0(%rdi), %r14 
+		mrmovq 8(%rdi), %rdi 
+		call rsum_list
+		addq %r14, %rax
+END:
+		popq %r14
+		ret
+
+main:
+		irmovq ele1, %rdi
+		call rsum_list
+		ret
+
+.pos 0x200   
+stack: 
+
+
